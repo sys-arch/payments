@@ -19,7 +19,6 @@ import com.stripe.model.PaymentIntent;
 import com.stripe.net.Webhook;
 
 import edu.uclm.esi.payments.services.PaymentService;
-import edu.uclm.esi.payments.services.UserCreditsService;
 
 @RestController
 @RequestMapping("/payments")
@@ -27,9 +26,6 @@ public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
-
-    @Autowired
-    private UserCreditsService userCreditsService;
 
     @Value("${stripe.webhook.secret}")
     private String webhookSecret;
@@ -53,7 +49,7 @@ public class PaymentController {
                 if (paymentIntent != null) {
                     String userId = paymentIntent.getMetadata().get("userId");
                     int amount = (int) (paymentIntent.getAmount() / 100);
-                    userCreditsService.addCredits(userId, amount);
+                    paymentService.addCredits(userId, amount);
                 }
             }
             return ResponseEntity.ok("Success");

@@ -30,4 +30,7 @@ public class PaymentService {
 
         return PaymentIntent.create(params);
     }
+
+    public void addCredits(String userId, int amount) {
+    }
 }
