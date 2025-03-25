@@ -1,0 +1,34 @@
+package edu.uclm.esi.payments.services;
+
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.stripe.Stripe;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
+
+public class ProxyStripe {
+
+    public String prepay (JSONObject jsoConf) {
+        
+        String key = jsoConf.getString("stripeAPIKey");
+        String currency = jsoConf.getString("currency");
+        long amount = (long) (jsoConf.getFloat("price") * 100);
+        Stripe.apiKey = key;
+
+        try {
+            PaymentIntentCreateParams params = new PaymentIntentCreateParams.Builder()
+                    .setCurrency(currency)
+                    .setAmount(amount)
+                    .build();
+            PaymentIntent intent = PaymentIntent.create(params);
+            JSONObject jso = new JSONObject(intent.toJson());
+            String clientSecret = jso.getString("client_secret");
+            return clientSecret;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, "Error creating payment intent");
+        }
+    }
+    
+}
