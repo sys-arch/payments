@@ -16,7 +16,7 @@ public class ProxyUsuarios {
 
     public void confirm(String token, int credits) throws Exception {
         HttpGet httpGet = new HttpGet(url + "addCredits/?amount=" + credits);
-        httpGet.setHeader("Authorization", "Bearer " + token);
+        httpGet.setHeader("Authorization", token);
            
         try (CloseableHttpClient httpclient = HttpClients.createDefault();
              CloseableHttpResponse response = httpclient.execute(httpGet)) {
