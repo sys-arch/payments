@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class PaymentService {
 
     private ProxyStripe proxyStripe;
+    private ProxyUsuarios proxyUsuarios;
 
     public String prepay(Map<String,Object> info) throws Exception {
 
@@ -27,8 +28,8 @@ public class PaymentService {
         
     }
 
-    public String confirm() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void confirm(String token, Integer credits) throws Exception {
+        this.proxyUsuarios.confirm(token, credits);
     }
     
 }
