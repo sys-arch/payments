@@ -10,11 +10,15 @@ import com.stripe.param.PaymentIntentCreateParams;
 
 public class ProxyStripe {
 
-    public String prepay (JSONObject jsoConf) {
+    public String prepay (JSONObject jsoConf, int credits) {
         
         String key = jsoConf.getString("stripeAPIKey");
         String currency = jsoConf.getString("currency");
         long amount = (long) (jsoConf.getFloat("price") * 100);
+        amount = amount * credits;
+        if (credits <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid amount");
+        }
         Stripe.apiKey = key;
 
         try {

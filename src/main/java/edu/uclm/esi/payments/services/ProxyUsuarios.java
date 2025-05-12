@@ -8,16 +8,16 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 public class ProxyUsuarios {
 
     private static ProxyUsuarios yo;
-    private final String url = "http://localhost:8081/users/";
+    private final String url = "http://localhost:8081/credits/";
     private final String url2 = "http://localhost:8081/tokens/";
 
     //Constructor privado
     private ProxyUsuarios() {}
 
     public void confirm(String token, int credits) throws Exception {
-        HttpGet httpGet = new HttpGet(url + "addCredits");
-        httpGet.setHeader("Authorization", "Bearer " + token); // Agregar la cabecera Authorization
-    
+        HttpGet httpGet = new HttpGet(url + "addCredits/?amount=" + credits);
+        httpGet.setHeader("Authorization", "Bearer " + token);
+           
         try (CloseableHttpClient httpclient = HttpClients.createDefault();
              CloseableHttpResponse response = httpclient.execute(httpGet)) {
     

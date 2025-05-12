@@ -13,10 +13,10 @@ public class PaymentService {
     private ProxyStripe proxyStripe;
     private ProxyUsuarios proxyUsuarios;
 
-    public String prepay(Map<String,Object> info) throws Exception {
+    public String prepay(int credits) throws Exception {
 
         JSONObject jsoConf = leerConfig("src/main/resources/conf.json");
-        return this.proxyStripe.prepay(jsoConf);
+        return this.proxyStripe.prepay(jsoConf, credits);
 
     }
 

@@ -23,9 +23,9 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @GetMapping("/prepay")
-    public String prepay(Map<String, Object> info) {
+    public String prepay(int credits) {
         try {
-            return this.paymentService.prepay(info);
+            return this.paymentService.prepay(credits);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Error procesando el pago");
         }
