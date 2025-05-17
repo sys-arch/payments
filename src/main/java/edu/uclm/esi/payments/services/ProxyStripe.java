@@ -2,12 +2,14 @@ package edu.uclm.esi.payments.services;
 
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 
+@Service
 public class ProxyStripe {
 
     public String prepay (JSONObject jsoConf, int credits) {

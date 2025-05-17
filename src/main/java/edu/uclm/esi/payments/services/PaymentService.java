@@ -2,15 +2,16 @@ package edu.uclm.esi.payments.services;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentService {
-
+    @Autowired
     private ProxyStripe proxyStripe;
+    
     private ProxyUsuarios proxyUsuarios;
 
     public String prepay(int credits) throws Exception {
@@ -31,5 +32,6 @@ public class PaymentService {
     public void confirm(String token, Integer credits) throws Exception {
         this.proxyUsuarios.confirm(token, credits);
     }
+    
     
 }

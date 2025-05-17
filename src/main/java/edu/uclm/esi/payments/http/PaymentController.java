@@ -4,7 +4,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -14,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import edu.uclm.esi.payments.services.PaymentService;
 
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 
 @RestController
 @RequestMapping("/payments")
@@ -22,14 +25,17 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/prepay")
-    public String prepay(int credits) {
+    @PostMapping("/prepay")
+    public ResponseEntity<String> prepay(@RequestBody Map<String, Integer> body) {
         try {
-            return this.paymentService.prepay(credits);
+            int credits = body.get("credits");
+            String clientSecret = paymentService.prepay(credits);
+            return ResponseEntity.ok(clientSecret);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Error procesando el pago");
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
+
 
     @PutMapping("/confirm")
     public void confirm(@RequestBody Integer credits,
