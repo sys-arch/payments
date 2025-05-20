@@ -8,8 +8,8 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 public class ProxyUsuarios {
 
     private static ProxyUsuarios yo;
-    private final String url = "http://localhost:8081/credits/";
-    private final String url2 = "http://localhost:8081/tokens/";
+    private final String url = "http://localhost:8001/credits/";
+    private final String url2 = "http://localhost:8001/tokens/";
 
     //Constructor privado
     private ProxyUsuarios() {}
@@ -32,7 +32,7 @@ public class ProxyUsuarios {
     }
 
     public void checkToken(String token) throws Exception {
-        HttpGet httpGet = new HttpGet(url + "validarToken");
+        HttpGet httpGet = new HttpGet(url2 + "validarToken");
         httpGet.setHeader("Authorization", "Bearer " + token); // Agregar la cabecera Authorization
     
         try (CloseableHttpClient httpclient = HttpClients.createDefault();
