@@ -16,7 +16,14 @@ import org.springframework.web.server.ResponseStatusException;
 
 import edu.uclm.esi.payments.services.PaymentService;
 
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(
+    originPatterns = {
+        "http://localhost:*",
+        "http://*.swey.net",
+        "https://*.swey.net"
+    },
+    allowCredentials = "true"
+)
 
 @RestController
 @RequestMapping("/payments")
