@@ -30,8 +30,9 @@ public class PaymentService {
     }
 
     public void confirm(String token, Integer credits) throws Exception {
-        this.proxyUsuarios.confirm(token, credits);
+    ProxyUsuarios.get().confirm(token, credits); // 👍 Así sí funciona
     }
+
     
     
 }
